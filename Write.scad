@@ -1,5 +1,4 @@
-/* 	Version 4
-	Added bold property  bold=0 (not bold) bold=1(bolder by 1.1) bold=2(bolder by 1.2) 
+/* 	Version 3
 	Added support for font selection (default is Letters.dxf)
 	Added WriteCube module
 	Added Rotate for text (rotates on the plane of the text)
@@ -27,7 +26,6 @@
 // defaults.
 
 //default settings
-	bold=0;
 	center=false;
 	h = 4;			 //mm letter height
 	t = 1; 			//mm letter thickness
@@ -75,19 +73,19 @@ module writecylinder(text,where,radius,height){
 		if (face=="top" ){
 			if (center==true){
 				writecircle(text,where+[0,0,height/2],radius-h,rotate=rotate,font=font,h=h,t=t,
-				space=space,east=east,west=west,middle=middle,ccw=ccw,bold=bold);
+				space=space,east=east,west=west,middle=middle,ccw=ccw);
 			}else{
 				writecircle(text,where+[0,0,height],radius-h,rotate=rotate,font=font,h=h,t=t,
-				space=space,east=east,west=west,middle=middle,ccw=ccw,bold=bold);
+				space=space,east=east,west=west,middle=middle,ccw=ccw);
 			}
 		}else{
 			rotate(180,[1,0,0])
 			if (center==true){
 				writecircle(text,where+[0,0,height/2],radius-h,rotate=rotate,font=font,h=h,t=t,
-				space=space,east=east,west=west,middle=middle,ccw=ccw,bold=bold);
+				space=space,east=east,west=west,middle=middle,ccw=ccw);
 			}else{
 				writecircle(text,where+[0,0,0],radius-h,rotate=rotate,font=font,h=h,t=t,
-				space=space,east=east,west=west,middle=middle,ccw=ccw,bold=bold);
+				space=space,east=east,west=west,middle=middle,ccw=ccw);
 			}
 		}
 	
@@ -98,13 +96,13 @@ module writecylinder(text,where,radius,height){
 				translate(where)
 				writethecylinder(text,where,radius,height,r1=radius,r2=radius,h=h,
 					rotate=rotate,t=t,font=font,face=face,up=up,down=down,
-					east=east,west=west,center=center,space=space,rounded=rounded,bold=bold);
+					east=east,west=west,center=center,space=space,rounded=rounded);
 			} else{
 				rotate(-mmangle(radius)*(1-abs(rotate)/90),[0,0,1])
 				translate(where+[0,0,height/2])
 					writethecylinder(text,where,radius,height,r1=radius,r2=radius,h=h,
 					rotate=rotate,t=t,font=font,face=face,up=up,down=down,
-					east=east,west=west,center=center,space=space,rounded=rounded,bold=bold);
+					east=east,west=west,center=center,space=space,rounded=rounded);
 			}
 // the remarked out code is for cone shaped cylinders (not complete)
 //		}else{
@@ -142,7 +140,7 @@ module writecircle(text,where,radius){
 					//rotate(90,[1,0,0])
 					//rotate(90,[0,1,0])
 					rotate(-270,[0,0,1])  // flip text (botom out = -270)
-					write(text[r],center=true,h=h,t=t,font=font,bold=bold);
+					write(text[r],center=true,h=h,t=t,font=font);
 				}
 			}
 		}
@@ -156,7 +154,7 @@ module writecircle(text,where,radius){
 					//rotate(90,[1,0,0])
 					//rotate(90,[0,1,0])
 					rotate(270,[0,0,1])  // flip text (botom out = -270)
-					write(text[r],center=true,h=h,t=t,font=font,bold=bold);
+					write(text[r],center=true,h=h,t=t,font=font);
 				}
 			}
 		}		
@@ -178,7 +176,7 @@ module writethecylinder(text,where,radius,height,r1,r2){
 				translate([radius,0,-r*((rotate)/90*wid)+(len(text)-1)/2*((rotate)/90*wid)])
 				rotate(90,[1,0,0])
 				rotate(90,[0,1,0])
-				write(text[r],center=true,h=h,rotate=rotate,t=t,font=font,bold=bold);
+				write(text[r],center=true,h=h,rotate=rotate,t=t,font=font);
 		//echo("zloc=",height/2-r*((rotate)/90*wid)+(len(text)-1)/2*((rotate)/90*wid));
 			}
 
@@ -206,7 +204,7 @@ module writesphere(text,where,radius){
 				translate([radius,0,0])
 				rotate(90,[1,0,0])
 				rotate(90,[0,1,0])
-				write(text[r],center=true,h=h,rotate=rotate,t=t,font=font,bold=bold);
+				write(text[r],center=true,h=h,rotate=rotate,t=t,font=font);
 			}
 		}else{
 			difference(){
@@ -216,7 +214,7 @@ module writesphere(text,where,radius){
 					translate([radius,0,0])
 					rotate(90,[1,0,0])
 					rotate(90,[0,1,0])
-					write(text[r],center=true,h=h,rotate=rotate,t=t*2+h,font=font,bold=bold);
+					write(text[r],center=true,h=h,rotate=rotate,t=t*2+h,font=font);
 				}
 				difference(){ //rounded outside
 					sphere(radius+(t*2+h)*2);
@@ -234,12 +232,12 @@ module writecube(text,where,size){
 	if (str(size)[0] != "["){  
 		// its a square cube (size was not a matrix so make it one)
 		writethecube(text,where,[size,size,size],h=h,rotate=rotate,space=space,
-		t=t,font=font,face=face,up=up,down=down,right=right,left=left,bold=bold);
+		t=t,font=font,face=face,up=up,down=down,right=right,left=left);
 
 	}else{
 		// its not square
 		writethecube(text,where,size,h=h,rotate=rotate,space=space,
-		t=t,font=font,face=face,up=up,down=down,right=right,left=left,bold=bold);
+		t=t,font=font,face=face,up=up,down=down,right=right,left=left);
 	}
 }
 // I split the writecube module into 2 pieces.. easier to add features later
@@ -247,34 +245,34 @@ module writethecube(text,where,size){
 		if (face=="front") {
 			translate([where[0]+right-left,where[1]-size[1]/2,where[2]+up-down])
 			rotate(90,[1,0,0])
-			write(text,center=true,h=h,rotate=rotate,t=t,font=font,space=space,bold=bold);
+			write(text,center=true,h=h,rotate=rotate,t=t,font=font);
 		}
 		if (face=="back") {
 			translate([where[0]+right-left,where[1]+size[1]/2,where[2]+up-down])
 			rotate(90,[1,0,0])   // rotate around the x axis
 			rotate(180,[0,1,0])  // rotate around the y axis (z before rotation)
-			write(text,center=true,h=h,rotate=rotate,t=t,font=font,space=space,bold=bold);
+			write(text,center=true,h=h,rotate=rotate,t=t,font=font);
 		}
 		if (face=="left") {
 			translate([where[0]-size[0]/2,where[1]-right+left,where[2]+up-down ])
 			rotate(90,[1,0,0])   // rotate around the x axis
 			rotate(90,[0,-1,0])  // rotate around the y axis  (z before rotation)
-			write(text,center=true,h=h,rotate=rotate,t=t,font=font,space=space,bold=bold);
+			write(text,center=true,h=h,rotate=rotate,t=t,font=font);
 		}
 		if (face=="right") {
 			translate([where[0]+size[0]/2,where[1]+right-left,where[2] +up-down])
 			rotate(90,[1,0,0])   // rotate around the x axis
 			rotate(90,[0,1,0])  // rotate around the y axis  (z before rotation)
-			write(text,center=true,h=h,rotate=rotate,t=t,font=font,space=space,bold=bold);
+			write(text,center=true,h=h,rotate=rotate,t=t,font=font);
 		}
 		if (face=="top") {
 			translate([where[0]+right-left,where[1]+up-down,where[2]+size[2]/2 ])
-			write(text,center=true,h=h,rotate=rotate,t=t,font=font,space=space,bold=bold);
+			write(text,center=true,h=h,rotate=rotate,t=t,font=font);
 		}
 		if (face=="bottom") {
 			translate([where[0]+right-left,where[1]-up+down,where[2]-size[2]/2 ])
 			rotate(180,[1,0,0])
-			write(text,center=true,h=h,rotate=rotate,t=t,font=font,space=space,bold=bold);
+			write(text,center=true,h=h,rotate=rotate,t=t,font=font);
 		}
 }
 
@@ -285,9 +283,7 @@ module write(word){
 	echo ("There are " ,len(word) ," letters in this string");
 //	echo ("The second letter is ",word[1]);
 //	echo (str(word[0],"_"));
-minkowski() {
 rotate(rotate,[0,0,-1]){
-	
 	for (r = [0:len(word)]){   // count off each character
 		// if the letter is lower case, add an underscore to the end for file lookup
 		if ((word[r] == "a" ) || (word[r]== "b")  || (word[r]== "c") 
@@ -303,20 +299,18 @@ rotate(rotate,[0,0,-1]){
 				translate([0,-h/2,0]){
 					scale([.125*h,.125*h,t]){	
 						translate([ (-len(word)*5.5*space/2) + (r*5.5*space),0,0])
-						//offset(delta = 20, join_type = "round") {
 						linear_extrude(height=1,convexity=10,center=true){
 							import(file = font,layer=str(word[r],"_"));
-						}//}
+						}
 					}
 				}
 			}else{
 				translate([0,0,t/2]){
 					scale([.125*h,.125*h,t]){	
 						translate([r*5.5*space,0,0])
-						//offset(delta = 20, join_type = "round") {
 						linear_extrude(height=1,convexity=10,center=true){
 							import(file = font,layer=str(word[r],"_"));
-						}//}
+						}
 					}
 				}
 			}
@@ -326,27 +320,23 @@ rotate(rotate,[0,0,-1]){
 				translate([0,-h/2,0]){
 					scale([.125*h,.125*h,t]){
 						translate([ (-len(word)*5.5*space/2) + (r*5.5*space),0,0])
-						//offset(delta = 20, join_type = "round") {
 						linear_extrude(height=1,convexity=10,center=true){
 							import(file = font,layer=str(word[r]));
-						}//}
+						}
 					}
 				}
 			}else{
 				translate([0,0,t/2]){
 					scale([.125*h,.125*h,t]){
 						translate([r*5.5*space,0,0])
-						//offset(delta = 20, join_type = "round") {
 						linear_extrude(height=1,convexity=10,center=true){
 							import(file = font,layer=str(word[r]));
-						}//}
+						}
 					}
 				}
 			}
 		}
 	}
-}
-cube([bold*.1*h,bold*.1*h,.00001]);
 }
 }
 
